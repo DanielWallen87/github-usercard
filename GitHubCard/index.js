@@ -3,6 +3,11 @@
            https://api.github.com/users/<your name>
 */
 
+axios.get('https://api.github.com/users/DanielWallen87')
+.then((response) => {
+  console.log(response);
+});
+
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -10,9 +15,48 @@
    Skip to Step 3.
 */
 
+function userCard(data){
+  let newCard = document.createElement('div');
+  newCard.classList.add('card');
+  
+  let newImage = document.createElement('img');
+  newImage.classList.add('card');
+  newImage.src = data.avatar_url;
+
+  let newName = document.createElement('h3');
+  newName.classList.add('card');
+  newName.classList.add('name');
+  newName.textContent = 
+
+  let newUsername = document.createElement('p');
+  newUsername.classList.add('card');
+  newUsername.classList.add('username');
+
+  let newLocation = document.createElement('p');
+  newLocation.classList.add('card');
+
+  let newProfile = document.createElement('a');
+  newProfile.classList.add('card');
+
+  let newFollowers = document.createElement('p');
+  newFollowers.classList.add('card');
+
+  let newFollowing = document.createElement('p');
+  newFollowing.classList.add('card');
+
+  let newBio = document.createElement('p');
+  newBio.classList.add('card');
+  
+  newCard.appendChild(newImage, newName, newUsername, newLocation, newProfile, newFollowers, newFollowing, newBio);
+  
+  return newCard
+}
+
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
 */
+
+let entryPoint = document.querySelector('cards');
 
 /* Step 5: Now that you have your own card getting added to the DOM, either 
           follow this link in your browser https://api.github.com/users/<Your github name>/followers 
