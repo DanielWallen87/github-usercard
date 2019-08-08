@@ -3,10 +3,7 @@
            https://api.github.com/users/<your name>
 */
 
-axios.get('https://api.github.com/users/DanielWallen87')
-.then((response) => {
-  console.log(response);
-});
+// Moving to bottom for ease of access
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -20,43 +17,64 @@ function userCard(data){
   newCard.classList.add('card');
   
   let newImage = document.createElement('img');
-  newImage.classList.add('card');
   newImage.src = data.avatar_url;
 
+  let cardInfo = document.createElement('div');
+  cardInfo.classList.add('card-info');
+
   let newName = document.createElement('h3');
-  newName.classList.add('card');
   newName.classList.add('name');
-  newName.textContent = 
+  newName.textContent = data.name;
 
   let newUsername = document.createElement('p');
-  newUsername.classList.add('card');
   newUsername.classList.add('username');
+  newUsername.textContent = data.login;
 
   let newLocation = document.createElement('p');
-  newLocation.classList.add('card');
+  newLocation.textContent = "Location: " + data.location;
 
-  let newProfile = document.createElement('a');
-  newProfile.classList.add('card');
+  let newProfile = document.createElement('p');
+  newProfile.textContent = "Profile: " + data.html_url;
 
   let newFollowers = document.createElement('p');
-  newFollowers.classList.add('card');
+  newFollowers.textContent = "Followers: " + data.followers;
 
   let newFollowing = document.createElement('p');
-  newFollowing.classList.add('card');
+  newFollowing.textContent = "Following: " + data.following;
 
   let newBio = document.createElement('p');
-  newBio.classList.add('card');
+  newBio.textContent = "Bio: " + data.bio;
   
-  newCard.appendChild(newImage, newName, newUsername, newLocation, newProfile, newFollowers, newFollowing, newBio);
+  newCard.append(newImage);
+  newCard.append(cardInfo);
+  cardInfo.append(newName); 
+  cardInfo.append(newUsername); 
+  cardInfo.append(newLocation); 
+  cardInfo.append(newProfile);
+  cardInfo.append(newFollowers); 
+  cardInfo.append(newFollowing); 
+  cardInfo.append(newBio);
   
+  const cards = document.querySelector('.cards');
+  cards.appendChild(newCard);
+
   return newCard
 }
+
+axios.get('https://api.github.com/users/DanielWallen87')
+.then((response) => {
+  console.log(response);
+  userCard(response.data);
+})
+  
+  .catch((err) => {
+    console.log(err)
+  })
+
 
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
 */
-
-let entryPoint = document.querySelector('cards');
 
 /* Step 5: Now that you have your own card getting added to the DOM, either 
           follow this link in your browser https://api.github.com/users/<Your github name>/followers 
@@ -68,7 +86,19 @@ let entryPoint = document.querySelector('cards');
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['SGonzalez44', 'brandonharris177', 'juarezfrench', 'deegrams221', 'AceMouty'];
+
+followersArray.forEach(follower => {
+  axios.get('https://api.github.com/users/' + follower)
+  .then((response) => {
+    console.log(response);
+    userCard(response.data);
+  })
+})
+  
+  .catch((err) => {
+    console.log(err)
+  })
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
