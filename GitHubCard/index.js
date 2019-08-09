@@ -16,15 +16,23 @@ function userCard(data){
   let newCard = document.createElement('div');
   newCard.classList.add('card');
   
+  // creates new div and applies the class name "card"
+
   let newImage = document.createElement('img');
   newImage.src = data.avatar_url;
+
+  // creates new image and provides the source URL from the API's data object
 
   let cardInfo = document.createElement('div');
   cardInfo.classList.add('card-info');
 
+  // creates new div, which serves as the container for the profile's text elements, and gives it the card-info class
+
   let newName = document.createElement('h3');
   newName.classList.add('name');
   newName.textContent = data.name;
+
+  // This element and the six below it pass the API's data into the textContent field along with any explanatory text
 
   let newUsername = document.createElement('p');
   newUsername.classList.add('username');
@@ -45,6 +53,9 @@ function userCard(data){
   let newBio = document.createElement('p');
   newBio.textContent = "Bio: " + data.bio;
   
+  // Below, elements are attached to their rightful parent (newCard only gets the image and text's parent container)
+  // All the text info children receive the parent cardInfo, which was created for the specific purpose of housing them
+
   newCard.append(newImage);
   newCard.append(cardInfo);
   cardInfo.append(newName); 
@@ -54,21 +65,23 @@ function userCard(data){
   cardInfo.append(newFollowers); 
   cardInfo.append(newFollowing); 
   cardInfo.append(newBio);
+
+  // "Cards" is the container on which everything we've created in this component shall be attached
   
   const cards = document.querySelector('.cards');
   cards.appendChild(newCard);
 
-  return newCard
+  return newCard // "newCard" is the variable that contains a profile's information
 }
 
-axios.get('https://api.github.com/users/DanielWallen87')
-.then((response) => {
+axios.get('https://api.github.com/users/DanielWallen87') // get all the info attached to my GitHub profile via their API
+.then((response) => { // Then do some things with the response
   console.log(response);
-  userCard(response.data);
+  userCard(response.data); // If response was successful, parse the data through the userCard function (create a profile)
 })
   
-  .catch((err) => {
-    console.log(err)
+  .catch((err) => { // Catch any weird errors or bugs that might happen
+    console.log(err) // Print the specifics in the console so I can deal with it
   })
 
 
